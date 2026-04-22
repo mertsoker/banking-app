@@ -63,5 +63,5 @@ jobs:
           script: |
             cd /home/ubuntu
             docker pull mertsoker/banking-app:latest
-            docker compose down
-            docker compose up -d
+            docker-compose down
+            docker-compose up -d
