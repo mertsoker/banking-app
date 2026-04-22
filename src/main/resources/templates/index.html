@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Banking Management System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px; /* Genişliği biraz artırdım butonlar için */
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 { color: #333; margin-bottom: 30px; text-align: center; }
+        h2 { color: #667eea; margin-top: 30px; margin-bottom: 15px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover { background-color: #f5f5f5; }
+
+        /* Buton Grubu Stili */
+        .action-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .action-links a {
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .btn-details { color: #667eea; }
+        .btn-edit { color: #f39c12; }
+        .btn-delete { color: #e74c3c; }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            flex: 1;
+            min-width: 150px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background-color: #764ba2; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏦 Banking Management System</h1>
+
+    <h2>Add New Customer</h2>
+    <form method="post" action="/customer/add">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="text" name="address" placeholder="Address" required>
+        <input type="text" name="city" placeholder="City" required>
+        <button type="submit">✚ Add Customer</button>
+    </form>
+
+    <h2>Customers List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.address}"></td>
+            <td th:text="${customer.city}"></td>
+            <td>
+                <div class="action-links">
+                    <a th:href="@{/customer/{id}(id=${customer.id})}" class="btn-details">📋 Details</a>
+
+                    <a th:href="@{/customer/{id}/edit(id=${customer.id})}" class="btn-edit">✏️ Edit</a>
+
+                    <a th:href="@{/customer/{id}/delete(id=${customer.id})}"
+                       class="btn-delete"
+                       onclick="return confirm('Bu müşteriyi silmek istediğinizden emin misiniz?')">🗑️ Delete</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1, h2 { color: #667eea; margin-bottom: 15px; }
+        .back-link { margin-bottom: 20px; }
+        .info-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+        }
+        .info-box p { margin: 8px 0; }
+        .info-box strong { color: #667eea; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #667eea;
+            color: white;
+        }
+        tr:hover { background-color: #f5f5f5; }
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover { text-decoration: underline; }
+        .no-data { color: #999; font-style: italic; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="back-link">
+        <a href="/">← Back to Customers</a>
+    </div>
+
+    <h1 th:if="${customer}">👤 Customer Details</h1>
+
+    <div class="info-box" th:if="${customer}">
+        <p><strong>ID:</strong> <span th:text="${customer.id}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${customer.name}"></span></p>
+        <p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
+        <p><strong>City:</strong> <span th:text="${customer.city}"></span></p>
+    </div>
+
+    <h2>💳 Accounts</h2>
+    <table th:if="${!accounts.isEmpty()}">
+        <tr>
+            <th>ID</th>
+            <th>Branch</th>
+            <th>Balance</th>
+        </tr>
+        <tr th:each="account : ${accounts}">
+            <td th:text="${account.id}"></td>
+            <td th:text="${account.branch}"></td>
+            <td th:text="${#numbers.formatDecimal(account.balance, 1, 2)}"></td>
+        </tr>
+    </table>
+    <p th:if="${accounts.isEmpty()}" class="no-data">No accounts found.</p>
+
+    <h2>💰 Deposits</h2>
+    <table th:if="${!depositors.isEmpty()}">
+        <tr>
+            <th>ID</th>
+            <th>Account ID</th>
+            <th>Deposit Date</th>
+            <th>Amount</th>
+        </tr>
+        <tr th:each="depositor : ${depositors}">
+            <td th:text="${depositor.id}"></td>
+            <td th:text="${depositor.account.id}"></td>
+            <td th:text="${depositor.depositDate}"></td>
+            <td th:text="${#numbers.formatDecimal(depositor.amount, 1, 2)}"></td>
+        </tr>
+    </table>
+    <p th:if="${depositors.isEmpty()}" class="no-data">No deposits found.</p>
+</div>
+</body>
+</html>
