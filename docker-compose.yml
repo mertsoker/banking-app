@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  springapp:
+    image: mertsoker/banking-app:latest
+    container_name: banking-app
+    ports:
+      - "80:8080"
+    restart: always
