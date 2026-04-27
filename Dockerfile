@@ -1,9 +1,4 @@
 FROM eclipse-temurin:17-jdk-jammy
-
-WORKDIR /app
-
-COPY target/*.jar app.jar
-
+COPY build/libs/*.jar ./banking-app.jar
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "banking-app.jar"]
