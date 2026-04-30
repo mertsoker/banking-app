@@ -54,7 +54,7 @@ jobs:
           echo "$EC2_KEY" > /tmp/ec2_key.pem
           chmod 600 /tmp/ec2_key.pem
           sftp -i /tmp/ec2_key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
-          put deploy.sh /home/ubuntu/deploy.sh
+          put script.sh /home/ubuntu/deploy.sh
           put docker-compose.yml /home/ubuntu/docker-compose.yml
           EOF
           rm -f /tmp/ec2_key.pem
@@ -66,5 +66,5 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            chmod +x /home/ubuntu/deploy.sh
-            /home/ubuntu/deploy.sh
+            chmod +x /home/ubuntu/script.sh
+            /home/ubuntu/script.sh
